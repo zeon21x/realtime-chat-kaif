@@ -123,12 +123,7 @@ function onMessageReceived(payload) {
     usernameElement.style["color"] = getAvatarColor(message.sender);
     //* update end
 
-  } // ← this is your closing brace at line 125
 
-      var messageArea = document.querySelector('#messageArea');
-      messageArea.appendChild(messageElement);
-      messageArea.scrollTop = messageArea.scrollHeight;
-  }
 
 
 //
