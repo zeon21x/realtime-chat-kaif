@@ -123,7 +123,7 @@ function onMessageReceived(payload) {
     usernameElement.style["color"] = getAvatarColor(message.sender);
     //* update end
 
-
+}
 
 
 //
