@@ -154,7 +154,7 @@ messageElement.appendChild(timeElement);
   } // * update end
   messageArea.appendChild(messageElement);
   messageArea.scrollTop = messageArea.scrollHeight;
-}
+
 
 function getAvatarColor(messageSender) {
   var hash = 0;
