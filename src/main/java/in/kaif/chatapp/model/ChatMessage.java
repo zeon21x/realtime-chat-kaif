@@ -1,4 +1,4 @@
-package in.tusharprabhu.chatapp.model;
+package in.kaif.chatapp.model;
 
 import lombok.*;
 
@@ -15,6 +15,15 @@ public class ChatMessage {
     private String content;
     private String sender;
     private MessageType type;
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     /**
      * Enum representing the type of the chat message.

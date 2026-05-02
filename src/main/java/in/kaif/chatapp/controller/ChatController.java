@@ -1,9 +1,10 @@
-package in.tusharprabhu.chatapp.controller;
+package in.kaif.chatapp.controller;
 
-import in.tusharprabhu.chatapp.model.ChatMessage;
+import in.kaif.chatapp.model.ChatMessage;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import java.time.LocalTime;
 
 /**
  * Controller class for handling chat-related functionality.
@@ -20,8 +21,12 @@ public class ChatController {
      */
     @MessageMapping("/chat.register")
     @SendTo("/topic/public")
+
+
     public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+        chatMessage.setTime(LocalTime.now().toString());
+
         return chatMessage;
     }
 
@@ -34,6 +39,9 @@ public class ChatController {
     @MessageMapping("/chat.send")
     @SendTo("/topic/public")
     public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+
+        chatMessage.setTime(LocalTime.now().toString());  // ✅ ADD THIS LINE
+
         return chatMessage;
     }
 }

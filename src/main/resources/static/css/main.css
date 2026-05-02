@@ -315,3 +315,8 @@ li span {
         font-size: 1.1em;
     }
 }
+.time {
+    font-size: 10px;
+    color: gray;
+    margin-left: 10px;
+}

@@ -33,24 +33,25 @@ var colors = [
 ];
 
 function connect(event) {
-  username = document.querySelector("#name").value.trim();
-  password = document.querySelector("#password").value;
-  if (username) {
-    //Enter your password
-    if (password == "hello") {
-      usernamePage.classList.add("hidden");
-      chatPage.classList.remove("hidden");
+    username = document.querySelector("#name").value.trim();
+    password = document.querySelector("#password").value;
 
-      var socket = new SockJS("/websocket");
-      stompClient = Stomp.over(socket);
+    if (username) {
 
-      stompClient.connect({}, onConnected, onError);
+        // removed password check
+        usernamePage.classList.add("hidden");
+        chatPage.classList.remove("hidden");
+
+        var socket = new SockJS("/websocket");
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, onConnected, onError);
+
     } else {
-      let mes = document.getElementById("mes");
-      mes.innerText = "Wrong password";
+        alert("Enter your name");
     }
-  }
-  event.preventDefault();
+
+    event.preventDefault();
 }
 
 function onConnected() {
@@ -123,11 +124,23 @@ function onMessageReceived(payload) {
     //* update end
   }
 
-  var textElement = document.createElement("p");
-  var messageText = document.createTextNode(message.content);
-  textElement.appendChild(messageText);
 
-  messageElement.appendChild(textElement);
+//
+
+var textElement = document.createElement("p");
+var messageText = document.createTextNode(message.content);
+textElement.appendChild(messageText);
+
+messageElement.appendChild(textElement);
+
+// ✅ ADD THIS BELOW (timestamp)
+var timeElement = document.createElement('span');
+timeElement.classList.add('time');
+timeElement.innerText = " " + message.time;
+
+messageElement.appendChild(timeElement);
+
+
   // * update
   if (message.sender === username) {
     // Add a class to float the message to the right
@@ -149,3 +162,7 @@ function getAvatarColor(messageSender) {
 
 usernameForm.addEventListener("submit", connect, true);
 messageForm.addEventListener("submit", send, true);
+
+
+// for time
+

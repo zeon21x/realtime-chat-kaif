@@ -1,6 +1,6 @@
-package in.tusharprabhu.chatapp.config;
+package in.kaif.chatapp.config;
 
-import in.tusharprabhu.chatapp.model.ChatMessage;
+import in.kaif.chatapp.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
