@@ -42,7 +42,7 @@ function connect(event) {
         usernamePage.classList.add("hidden");
         chatPage.classList.remove("hidden");
 
-        var socket = new SockJS("/websocket");
+        var socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
@@ -84,7 +84,7 @@ function send(event) {
       type: "CHAT",
     };
 
-    stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+    stompClient.send('/app/chat.sendMessage', {}, JSON.stringify(chatMessage));
     messageInput.value = "";
   }
   event.preventDefault();
