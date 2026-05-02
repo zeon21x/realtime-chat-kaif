@@ -95,60 +95,38 @@ function send(event) {
  * param {Object} payload - The payload containing the message data.
  */
 function onMessageReceived(payload) {
-  var message = JSON.parse(payload.body);
+    var message = JSON.parse(payload.body);
+    var messageArea = document.querySelector('#messageArea');
+    var messageElement = document.createElement("li");
 
-  var messageElement = document.createElement("li");
+    if (message.type === "JOIN") {
+        messageElement.classList.add("event-message");
+        messageElement.textContent = message.sender + " joined!";
+    } else if (message.type === "LEAVE") {
+        messageElement.classList.add("event-message");
+        messageElement.textContent = message.sender + " left!";
+    } else {
+        messageElement.classList.add("chat-message");
+        var avatarElement = document.createElement("i");
+        var avatarText = document.createTextNode(message.sender[0]);
+        avatarElement.appendChild(avatarText);
+        avatarElement.style["background-color"] = getAvatarColor(message.sender);
+        messageElement.appendChild(avatarElement);
+        var usernameElement = document.createElement("span");
+        usernameElement.appendChild(document.createTextNode(message.sender));
+        usernameElement.style["color"] = getAvatarColor(message.sender);
+        messageElement.appendChild(usernameElement);
+        var textElement = document.createElement("p");
+        textElement.appendChild(document.createTextNode(message.content));
+        messageElement.appendChild(textElement);
+        if (message.sender === username) {
+            messageElement.classList.add("own-message");
+        }
+    }
 
-  if (message.type === "JOIN") {
-    messageElement.classList.add("event-message");
-    message.content = message.sender + " joined!";
-  } else if (message.type === "LEAVE") {
-    messageElement.classList.add("event-message");
-    message.content = message.sender + " left!";
-  } else {
-    messageElement.classList.add("chat-message");
-
-    var avatarElement = document.createElement("i");
-    var avatarText = document.createTextNode(message.sender[0]);
-    avatarElement.appendChild(avatarText);
-    avatarElement.style["background-color"] = getAvatarColor(message.sender);
-
-    messageElement.appendChild(avatarElement);
-
-    var usernameElement = document.createElement("span");
-    var usernameText = document.createTextNode(message.sender);
-    usernameElement.appendChild(usernameText);
-    messageElement.appendChild(usernameElement);
-    // * update
-    usernameElement.style["color"] = getAvatarColor(message.sender);
-    //* update end
-
+    messageArea.appendChild(messageElement);
+    messageArea.scrollTop = messageArea.scrollHeight;
 }
-
-
-//
-
-var textElement = document.createElement("p");
-var messageText = document.createTextNode(message.content);
-textElement.appendChild(messageText);
-
-messageElement.appendChild(textElement);
-
-// ✅ ADD THIS BELOW (timestamp)
-var timeElement = document.createElement('span');
-timeElement.classList.add('time');
-timeElement.innerText = " " + message.time;
-
-messageElement.appendChild(timeElement);
-
-
-  // * update
-  if (message.sender === username) {
-    // Add a class to float the message to the right
-    messageElement.classList.add("own-message");
-  } // * update end
-  messageArea.appendChild(messageElement);
-  messageArea.scrollTop = messageArea.scrollHeight;
 
 
 function getAvatarColor(messageSender) {
