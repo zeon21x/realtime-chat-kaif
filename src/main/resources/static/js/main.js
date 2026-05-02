@@ -42,7 +42,7 @@ function connect(event) {
         usernamePage.classList.add("hidden");
         chatPage.classList.remove("hidden");
 
-        var socket = new SockJS('/ws');
+        var socket = new SockJS('/websocket');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
@@ -84,7 +84,7 @@ function send(event) {
       type: "CHAT",
     };
 
-    stompClient.send('/app/chat.sendMessage', {}, JSON.stringify(chatMessage));
+    stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessage));
     messageInput.value = "";
   }
   event.preventDefault();
@@ -122,6 +122,12 @@ function onMessageReceived(payload) {
     // * update
     usernameElement.style["color"] = getAvatarColor(message.sender);
     //* update end
+
+  } // ← this is your closing brace at line 125
+
+      var messageArea = document.querySelector('#messageArea');
+      messageArea.appendChild(messageElement);
+      messageArea.scrollTop = messageArea.scrollHeight;
   }
 
 
